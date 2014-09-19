@@ -1,0 +1,1 @@
+mysqldump --opt -udb2014_g05 -pdb2014_g05 > back.sql

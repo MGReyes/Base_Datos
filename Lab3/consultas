@@ -4,10 +4,11 @@ use db2014_g05;
 use db2014_g05;
 
 select Cuit, Razon_social, sum(cantidad) as total_maquinas
-from (Cliente natural join ClienteMaquina) natural join 
-    (select Cuit
+from (Cliente natural join ClienteMaquina) natural join (
+    select Cuit
     from VendedorCliente
-    where Cuil = 20675821714) as clientes_de_vendedor
+    where Cuil = 20675821714) 
+    as clientes_de_vendedor
 group by Cuit
 order by total_maquinas asc;
 
@@ -22,14 +23,15 @@ order by total_maquinas asc;
 use db2014_g05;
 
 select Cuil, sum(porcentaje) as porcentaje
-from VendedorCliente natural join (select Cuit, (sum(Cantidad)*100/(select sum(Cantidad)
-                                                                    from ClienteMaquina
-                                                                    where Marca = "Consequat Corporatio" 
-                                                                    and Modelo = "ZT202a")) as porcentaje
-                                   from ClienteMaquina
-                                   where Marca = "Consequat Corporatio" and Modelo = "ZT202a"
-                                   group by Cuit) 
-                                   as clientes_con_porcentajes
+from VendedorCliente natural join (
+    select Cuit, (Cantidad*100/ (
+        select sum(Cantidad)
+        from ClienteMaquina
+        where Marca = "Consequat Corporatio" 
+        and Modelo = "ZT202a")) as porcentaje
+    from ClienteMaquina
+    where Marca = "Consequat Corporatio" and Modelo = "ZT202a") 
+    as clientes_con_porcentajes
 group by Cuil;
 
 --3b) CONSULTA
@@ -39,14 +41,13 @@ select NombreZona, sum(porcentaje_ciudad) as porcentaje_zona
 from CiudadZona natural join (
     select NombreCiudad, sum(porcentaje) as porcentaje_ciudad
     from Cliente natural join (
-        select Cuit, (sum(Cantidad)*100/(
+        select Cuit, (Cantidad*100/ (
             select sum(Cantidad)
             from ClienteMaquina
             where Marca = "Consequat Corporatio" 
             and Modelo = "ZT202a")) as porcentaje
         from ClienteMaquina
-        where Marca = "Consequat Corporatio" and Modelo = "ZT202a"
-        group by Cuit)
+        where Marca = "Consequat Corporatio" and Modelo = "ZT202a")
         as clientes_con_porcentajes
     group by NombreCiudad)
     as porcentaje_ciudad

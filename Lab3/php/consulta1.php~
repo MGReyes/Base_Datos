@@ -21,25 +21,26 @@ from (Cliente natural join ClienteMaquina) natural join (
 group by Cuit
 order by total_maquinas asc
 ", $link);
-if ($row = mysql_fetch_array($result)){
-      echo "<table border = '1'> \n";
-//Mostramos los nombres de las tablas
-echo "<tr> \n";
-while ($field = mysql_fetch_field($result)){
-            echo "<td>$field->name</td> \n";
-}
-      echo "</tr> \n";
-do {
-            echo "<tr> \n";
-            echo "<td>".$row["Razon_social"]."</td> \n";
-            echo "<td>".$row["Cuit"]."</td> \n";
-            echo "<td>".$row["total_maquinas"]."</td> \n";
-            echo "</tr> \n";
-      } while ($row = mysql_fetch_array($result));
-            echo "</table> \n";
+if ($row = mysql_fetch_array($result)) {
+    echo "<table border = '1'> \n";
+    //Mostramos los nombres de las tablas
+    echo "<tr> \n";
+    while ($field = mysql_fetch_field($result)){
+        echo "<td>$field->name</td> \n";
+    }
+    echo "</tr> \n";
+    do {
+        echo "<tr> \n";
+        echo "<td>".$row["Razon_social"]."</td> \n";
+        echo "<td>".$row["Cuit"]."</td> \n";
+        echo "<td>".$row["total_maquinas"]."</td> \n";
+        echo "</tr> \n";
+    } while ($row = mysql_fetch_array($result));
+    echo "</table> \n";
 } else {
-echo utf8_decode("¡No se ha encontrado ningún registro!");
+    echo utf8_decode("¡No se ha encontrado ningún registro!");
 }
 ?>
+
 </body>
 </html>

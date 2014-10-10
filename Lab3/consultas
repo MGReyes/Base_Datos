@@ -122,3 +122,31 @@ SELECT NombreCiudad, CP_Ciudad, sum(Cantidad) AS Cantidad_Maquinas
 FROM Cliente NATURAL JOIN ClienteMaquina
 GROUP BY NombreCiudad
 ORDER BY NombreCiudad, Cantidad_Maquinas desc;
+
+
+--10) CONSULTA
+
+SELECT *
+FROM Cliente
+WHERE
+    Cuit not in
+    (SELECT Cuit
+    FROM ClienteMaquina
+    WHERE Marca = 'A Incorporated' and Modelo = 'JA689p')
+    AND
+    Cuit in
+    (SELECT Cuit
+    FROM AreaCliente
+    WHERE Nombre_Area = 'Agricultura');
+
+
+
+
+--11) CONSULTA
+
+SELECT *
+FROM
+    (SELECT Cuit, sum(Cantidad) AS Cantidad_Maquinas
+    FROM Comunicacion NATURAL JOIN ClienteMaquina
+    GROUP BY Cuit
+    ORDER BY count(Numero)) AS TablaAux NATURAL JOIN Cliente;

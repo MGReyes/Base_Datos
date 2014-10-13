@@ -41,6 +41,7 @@ if ($row = mysql_fetch_array($result)) {
         echo "</tr> \n";
     } while ($row = mysql_fetch_array($result));
     echo "</table> \n";
+    echo "<p>Las maquinas que los clientes del vendedor no poseen, no son listadas</p>";
 } else {
     echo utf8_decode("¡No se ha encontrado ningún registro!");
 }

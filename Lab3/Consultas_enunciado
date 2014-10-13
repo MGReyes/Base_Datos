@@ -6,21 +6,21 @@ Tener en cuenta restricciones de integridad necesarias!
 
 Consultas para tercera entrega (fecha Limite 10/10/2014) 
 
-Listar los clientes con la cantidad de maquinarias que se tienen registradas ordenados de mayor a menor de un determinado vendedor.
+Listar los clientes con la cantidad de maquinarias que se tienen registradas ordenados de mayor a menor de un determinado vendedor. !
 
-Implementar un triggers que al agendar una campaña publicitaria para determinada fecha y determinado número de maquinas les agende a todos los clientes que tengan alguna de esas maquinas una comunicación pendiente.
+Implementar un trigger que al agendar una campaña publicitaria para determinada fecha y determinado número de maquinas les agende a todos los clientes que tengan alguna de esas maquinas una comunicación pendiente. (*)
 
-Listar cual es la distribución en % de cada máquina por vendedor o por zona. (Ej si hay 100 en total de la maquina1 y los clientes de un vendedor tienen 8 en total ese vendedor tiene el 8% de la maquina1)
+Listar cual es la distribución en % de cada máquina por vendedor o por zona. (Ej si hay 100 en total de la maquina1 y los clientes de un vendedor tienen 8 en total ese vendedor tiene el 8% de la maquina1) !
 
-Listar para un vendedor la cantidad de comunicaciones pendientes y la cantidad realizada mes a mes
+Listar para un vendedor la cantidad de comunicaciones pendientes y la cantidad realizada mes a mes !
 
-Listado de Maquinas que pertenecen a una zona y no a otra/otras
+Listado de Maquinas que pertenecen a una zona y no a otra/otras !
 
-Listado de Maquinas que están en todas las zonas
+Listado de Maquinas que están en todas las zonas !
 
-Cantidad de Clientes por zona
+Cantidad de Clientes por zona !
 
-Cantidad de cada maquina por ciudad ordenado  por ciudades (alfabético) y maquina de mayor cantidad a menor
+Cantidad de cada maquina por ciudad ordenado por ciudades (alfabético) y maquina de mayor cantidad a menor
 
 Listado de Vendedores según índice de cumplimiento de comunicaciones (pendientes/realizadas) en un periodo dado.
 

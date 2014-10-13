@@ -93,7 +93,7 @@ from (
 
 use db2014_g05;
 
-select YEAR(Fecha), MONTH(Fecha) as Mes, sum(Pendientes) as pendientes, sum(Realizadas) as realizadas
+select YEAR(Fecha) as Año, MONTH(Fecha) as Mes, sum(Pendientes) as pendientes, sum(Realizadas) as realizadas
 from (select Fecha, Cuil,
           (case Estado when "pendiente" then 1 else 0 end) as Pendientes,
           (case Estado when "realizada" then 1 else 0 end) as Realizadas
@@ -155,10 +155,10 @@ GROUP BY NombreZona;
 
 use db2014_g05;
 
-SELECT NombreCiudad, CP_Ciudad, sum(Cantidad) AS Cantidad_Maquinas
+SELECT NombreCiudad, CP_Ciudad, Marca, Modelo, Cantidad
 FROM Cliente NATURAL JOIN ClienteMaquina
-GROUP BY NombreCiudad
-ORDER BY NombreCiudad, Cantidad_Maquinas desc;
+GROUP BY NombreCiudad, Marca, Modelo
+ORDER BY NombreCiudad, Cantidad desc;
 
 --9) CONSULTA
 
@@ -190,9 +190,6 @@ WHERE
     (SELECT Cuit
     FROM AreaCliente
     WHERE Nombre_Area = 'Agricultura');
-
-
-
 
 --11) CONSULTA
 

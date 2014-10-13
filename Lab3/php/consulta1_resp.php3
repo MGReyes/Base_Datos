@@ -2,9 +2,9 @@
 <body>
 
 <?php
-$buscar = $_POST['Cuil'];
-if (!isset($buscar)){
-      echo "Debe especificar una cadena a bucar";
+$cuil = $_POST['Cuil'];
+if (!isset($cuil)){
+      echo "Debe especificar un vendedor";
       echo "</html></body> \n";
       exit;
 }
@@ -15,7 +15,7 @@ select Cuit, Razon_social, sum(cantidad) as total_maquinas
 from (Cliente natural join ClienteMaquina) natural join (
     select Cuit
     from VendedorCliente
-    where Cuil = $buscar) 
+    where Cuil = $cuil) 
     as clientes_de_vendedor
 group by Cuit
 order by total_maquinas asc

@@ -22,18 +22,34 @@ order by total_maquinas asc;
 
 use db2014_g05;
 
-SET @cant_maq = (select sum(Cantidad)
-                from ClienteMaquina
-                where Marca = "Consequat Corporatio" 
-                and Modelo = "ZT202a");
-
+-- Primera interpretacion
 select Cuil, sum(porcentaje) as porcentaje
 from VendedorCliente natural join (
-    select Cuit, (Cantidad*100/@cant_maq) as porcentaje
+    select Cuit, (Cantidad*100/(
+        select sum(Cantidad)
+        from ClienteMaquina
+        ) as porcentaje
     from ClienteMaquina
     where Marca = "Consequat Corporatio" and Modelo = "ZT202a") 
     as clientes_con_porcentajes
 group by Cuil;
+
+-- Esta es mas parecida a lo que dice el enunciado
+select Marca, Modelo, Cantidad_Clientes*100/Cantidad_Total as porcentaje
+from (
+    select Marca, Modelo, sum(Cantidad) as Cantidad_Total
+    from ClienteMaquina
+    group by Marca, Modelo)
+    as maquinas
+    natural join (
+    select Marca, Modelo, sum(Cantidad) as Cantidad_Clientes
+    from ClienteMaquina natural join
+        (select Cuit
+        from VendedorCliente
+        where Cuil = 20675821714) 
+        as clientes_de_vendedor
+    group by Marca, Modelo)
+    as maquinas_de_clientes;
 
 --3b) CONSULTA
 
@@ -55,6 +71,23 @@ from CiudadZona natural join (
     group by NombreCiudad)
     as porcentaje_ciudad
 group by NombreZona;
+
+-- Esta es mas parecida a lo que dice el enunciado
+
+use db2014_g05;
+
+select Marca, Modelo, Cantidad_Zona*100/Cantidad_Total as porcentaje
+from (
+    select Marca, Modelo, sum(Cantidad) as Cantidad_Total
+    from ClienteMaquina
+    group by Marca, Modelo)
+    as maquinas
+    natural join (
+    select Marca, Modelo, sum(Cantidad) as Cantidad_Zona
+    from Cliente natural join ClienteMaquina natural join CiudadZona
+    where NombreZona = "Interior"
+    group by Marca, Modelo)
+    as maquinas_de_zona;
 
 -- 4) CONSULTA
 
@@ -107,6 +140,8 @@ group by NombreZona;
 
 --7) OTRA FORMA
 
+use db2014_g05;
+
 SELECT NombreZona, count(*) AS Cantidad_Clientes
 FROM
 (SELECT *
@@ -118,13 +153,30 @@ GROUP BY NombreZona;
 
 --8) CONSULTA
 
+use db2014_g05;
+
 SELECT NombreCiudad, CP_Ciudad, sum(Cantidad) AS Cantidad_Maquinas
 FROM Cliente NATURAL JOIN ClienteMaquina
 GROUP BY NombreCiudad
 ORDER BY NombreCiudad, Cantidad_Maquinas desc;
 
+--9) CONSULTA
+
+use db2014_g05;
+
+SELECT Cuil, sum(Realizadas)-sum(Pendientes) as Indice_Cumplimiento
+FROM 
+    (SELECT Numero, Cuil, Cuit, Medio, Observacion, Fecha,
+       (case Estado when "pendiente" then 1 else 0 end) as Pendientes,
+        (case Estado when "realizada" then 1 else 0 end) as Realizadas
+    FROM Comunicacion
+    WHERE Fecha BETWEEN '2012-01-01 00:00:00' AND '2014-12-30 00:00:00') as com_pend_real
+GROUP BY Cuil
+ORDER BY Indice_Cumplimiento desc;
 
 --10) CONSULTA
+
+use db2014_g05;
 
 SELECT *
 FROM Cliente
@@ -143,6 +195,8 @@ WHERE
 
 
 --11) CONSULTA
+
+use db2014_g05;
 
 SELECT *
 FROM

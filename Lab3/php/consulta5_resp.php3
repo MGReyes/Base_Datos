@@ -11,11 +11,11 @@ if (!isset($NombreZona)){
 $link = mysql_connect("kali","db2014_g05","FFPR14");
 mysql_select_db("db2014_g05", $link);
 $result = mysql_query("
-select Marca,Modelo
-from ClienteMaquina natural join Cliente natural join CiudadZona
+select Marca, Modelo
+from Maquina natural join ClienteMaquina natural join Cliente natural join CiudadZona
 where NombreZona = "."'".$NombreZona."'"." and (Marca, Modelo) not in (
-   select Marca,Modelo
-   from ClienteMaquina natural join Cliente natural join CiudadZona
+   select Marca, Modelo
+   from Maquina natural join ClienteMaquina natural join Cliente natural join CiudadZona
    where NombreZona != "."'".$NombreZona."'".");
 ", $link);
 if ($row = mysql_fetch_array($result)) {

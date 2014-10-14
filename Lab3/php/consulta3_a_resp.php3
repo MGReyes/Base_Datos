@@ -12,19 +12,19 @@ $link = mysql_connect("kali","db2014_g05","FFPR14");
 mysql_select_db("db2014_g05", $link);
 $result = mysql_query("
 select Marca, Modelo, Cantidad_Clientes*100/Cantidad_Total as porcentaje
-from (
-    select Marca, Modelo, sum(Cantidad) as Cantidad_Total
+from Maquina natural join (
+    select ID_Maquina, sum(Cantidad) as Cantidad_Total
     from ClienteMaquina
-    group by Marca, Modelo)
+    group by ID_Maquina)
     as maquinas
     natural join (
-    select Marca, Modelo, sum(Cantidad) as Cantidad_Clientes
+    select ID_Maquina, sum(Cantidad) as Cantidad_Clientes
     from ClienteMaquina natural join
         (select Cuit
         from VendedorCliente
         where Cuil = $cuil) 
         as clientes_de_vendedor
-    group by Marca, Modelo)
+    group by ID_Maquina)
     as maquinas_de_clientes;
 ", $link);
 if ($row = mysql_fetch_array($result)) {

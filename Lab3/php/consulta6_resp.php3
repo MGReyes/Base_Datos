@@ -5,11 +5,11 @@
 $link = mysql_connect("kali","db2014_g05","FFPR14");
 mysql_select_db("db2014_g05", $link);
 $result = mysql_query("
-SELECT Marca,Modelo
-FROM(
-   SELECT Marca,Modelo,NombreZona
-   FROM ClienteMaquina natural join Cliente natural join CiudadZona) as p
-GROUP BY Marca,Modelo
+SELECT Marca, Modelo
+FROM (
+   SELECT Marca, Modelo, NombreZona
+   FROM Maquina natural join ClienteMaquina natural join Cliente natural join CiudadZona) as p
+GROUP BY Marca, Modelo
 HAVING COUNT(*) = (
    SELECT COUNT(*)
    FROM Zona);

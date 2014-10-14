@@ -137,7 +137,7 @@ WHERE
     Cuit not in
     (SELECT Cuit
     FROM ClienteMaquina
-    WHERE Marca = 'A Incorporated' and Modelo = 'JA689p')
+    WHERE ID_Maquina = 7)
     AND
     Cuit in
     (SELECT Cuit
@@ -148,10 +148,12 @@ WHERE
 
 use db2014_g05;
 
-SELECT *
-FROM
-    (SELECT Cuit, sum(Cantidad) AS Cantidad_Maquinas
-    FROM Comunicacion natural join ClienteMaquina
-    GROUP BY Cuit
-    ORDER BY count(Numero)) AS TablaAux natural join Cliente;
+SELECT Cuit, Razon_Social, Cant_Comunicaciones_Realizadas, sum(Cantidad) as Cant_Maquinas
+FROM Cliente natural join ClienteMaquina natural join (
+    SELECT Cuit, count(*) as Cant_Comunicaciones_Realizadas
+    FROM Comunicacion
+    WHERE Estado = "realizada"
+    GROUP BY Cuit) as cant_com_realizadas_por_cliente
+GROUP BY Cuit
+ORDER BY Cant_Comunicaciones_Realizadas desc;
 

@@ -10,7 +10,7 @@ echo "<form method="."'POST'"."action="."'consulta10_resp.php3'"."> \n";
 echo "Elija la maquina<br>";
 echo "<select name="."'Maquina'"."> \n";
 while ($row = mysql_fetch_array($result)) {
-       echo "<option value="."'Marca_Modelo'"."> ".$row["Marca"]." ".$row["Modelo"]." </option>\n";
+       echo "<option value= ".$row["ID_Maquina"]."> ".$row["Marca"]." ".$row["Modelo"]." </option>\n";
 }
 echo "</select> \n";
 echo "<input type="."'submit'". "value="."'Consultar'". "name="."'consulta'"."> \n";

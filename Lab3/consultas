@@ -1,17 +1,6 @@
 use db2014_g05;
 
 
-
-
-
-
-
-
-
-
-
-
-
 --1) CONSULTA
 
 use db2014_g05;
@@ -32,17 +21,17 @@ USE db2014_g05;
 
 DELIMITER //
 CREATE TRIGGER comunicacion_por_campaña AFTER INSERT ON CampañaMaquina
-REFERENCING NEW ROW AS nrow
 FOR EACH ROW
 BEGIN
-    WITH tabla_clientes(Cuil, Cuit) AS
-        (SELECT Cuil, Cuit
-         FROM ClienteMaquina NATURAL JOIN VendedorCliente
-         WHERE ID_Maquina = nrow.ID_Maquina),
     INSERT INTO Comunicacion(Cuil, Cuit, Medio, Observacion, Estado, Fecha)
-    VALUES ((SELECT Cuil FROM tabla_clientes), (SELECT Cuit FROM tabla_clientes, 'Telefonico', 'Llamar por campania', '2014-06-26 19:27:00');
+                     SELECT DISTINCT (Cuil, Cuit, 'telefonico', CONCAT('Llamar por campaña ', NEW.Numero), 'pendiente', (SELECT Fecha_Inicio
+                                                                                                                         FROM Campaña
+                                                                                                                         WHERE Numero = NEW.Numero))
+                     FROM ClienteMaquina NATURAL JOIN VendedorCliente
+                     WHERE ID_Maquina = NEW.ID_Maquina;
 END;
 // DELIMITER;
+
 
 
 --3a) CONSULTA

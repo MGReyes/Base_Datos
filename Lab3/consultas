@@ -19,16 +19,30 @@ ORDER BY total_maquinas;
 
 USE db2014_g05;
 
+-- Trigger para hacer inserts en comunicacion al agregar maquina a una campaña
 DELIMITER //
 CREATE TRIGGER comunicacion_por_campaña AFTER INSERT ON CampañaMaquina
 FOR EACH ROW
 BEGIN
     INSERT INTO Comunicacion(Cuil, Cuit, Medio, Observacion, Estado, Fecha)
-                     SELECT DISTINCT (Cuil, Cuit, 'telefonico', CONCAT('Llamar por campaña ', NEW.Numero), 'pendiente', (SELECT Fecha_Inicio
-                                                                                                                         FROM Campaña
-                                                                                                                         WHERE Numero = NEW.Numero))
-                     FROM ClienteMaquina NATURAL JOIN VendedorCliente
-                     WHERE ID_Maquina = NEW.ID_Maquina;
+    SELECT (Cuil, Cuit, 'telefonico', CONCAT('Llamar por campaña ', NEW.Numero), 'pendiente', (
+        SELECT Fecha_Inicio
+        FROM Campaña
+        WHERE Numero = NEW.Numero))
+    FROM ClienteMaquina NATURAL JOIN VendedorCliente
+    WHERE ID_Maquina = NEW.ID_Maquina;
+END;
+// DELIMITER;
+
+-- Trigger para borrar duplicados de comunicacion (Util si hay un cliente con varias maquinas de una misma campaña)
+-- FALTA PPROBARLO
+DELIMITER //
+CREATE TRIGGER duplicados_comunicacion_por_campaña AFTER INSERT ON CampañaMaquina
+FOR EACH ROW
+BEGIN
+    DELETE FROM Comunicacion
+    WHERE Cuil = NEW.Cuil and Cuit = NEW.Cuit and Medio = NEW.Medio and 
+    Observacion = NEW.Observacion and Estado = NEW.Estado and Fecha = NEW.Fecha;
 END;
 // DELIMITER;
 

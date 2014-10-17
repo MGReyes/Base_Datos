@@ -36,6 +36,23 @@ BEGIN
 END;
 // DELIMITER;
 
+-- Trigger para borrar duplicados de comunicacion (Util si hay un cliente con varias maquinas de una misma campaña)
+
+
+DELIMITER //
+CREATE TRIGGER set_null_com_duplicada BEFORE INSERT ON Comunicacion
+FOR EACH ROW
+BEGIN
+    IF EXISTS (SELECT *
+               FROM Comunicacion
+               WHERE Cuil = NEW.Cuil and Cuit = NEW.Cuit and Medio = NEW.Medio and 
+               Observacion like NEW.Observacion and Estado = NEW.Estado and 
+               Fecha = NEW.Fecha) THEN
+        SET NEW.Cuil = NULL;
+    END IF;
+END;
+// DELIMITER;
+
 
 --3a) CONSULTA
 

@@ -26,10 +26,10 @@ BEGIN
         SELECT Fecha_Inicio
         FROM Campaña
         WHERE Numero = NEW.Numero)
-    FROM ClienteMaquina NATURAL JOIN Cliente
+    FROM ClienteMaquina NATURAL JOIN VendedorCliente 
     WHERE ID_Maquina = NEW.ID_Maquina and NOT EXISTS (SELECT *
                                                       FROM Comunicacion AS C
-                                                      WHERE C.Cuil = Cuil AND C.Cuit = Cuit AND CONCAT('Llamar por campaña ', NEW.Numero) = C.Observacion);
+                                                      WHERE C.Cuil = VendedorCliente.Cuil AND C.Cuit = ClienteMaquina.Cuit AND CONCAT('Llamar por campaña ', NEW.Numero) = C.Observacion);
 END;
 // DELIMITER;
 

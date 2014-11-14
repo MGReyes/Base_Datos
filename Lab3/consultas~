@@ -29,7 +29,7 @@ BEGIN
     FROM ClienteMaquina NATURAL JOIN Cliente
     WHERE ID_Maquina = NEW.ID_Maquina and NOT EXISTS (SELECT *
                                                       FROM Comunicacion AS C
-                                                      WHERE C.Cuil = Cliente.Cuil AND C.Cuit = Cliente.Cuit AND CONCAT('Llamar por campaña ', NEW.Numero) = C.Observacion);
+                                                      WHERE C.Cuil = Cuil AND C.Cuit = Cuit AND CONCAT('Llamar por campaña ', NEW.Numero) = C.Observacion);
 END;
 // DELIMITER;
 

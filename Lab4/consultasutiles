@@ -1,0 +1,8 @@
+select Cuit, Razon_Social, NombreZona as Zona , Cuil, Nombre as NombreVendedor, Apellido as ApellidoVendedor
+from Cliente natural join CiudadZona natural join Vendedor;
+
+select *
+from ClienteMaquina;
+
+select Cuit,Numero
+from Cliente natural join Contacto natural join NumeroTelefonoContacto;

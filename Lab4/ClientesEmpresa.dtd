@@ -1,16 +1,17 @@
 <!DOCTYPE ClientesEmpresa [
+    <!ELEMENT ClientesEmpresa (Cliente+)>
     <!ELEMENT Cliente (Razon_Social, Zona, Vendedor, Maquina*, Telefono*)>
     <!ATTLIST Cliente Cuit ID #REQUIRED>
     <!ELEMENT Razon_Social(#PCDATA)>
     <!ELEMENT Zona (#PCDATA)>
     <!ELEMENT Vendedor (Nombre, Apellido)>
     <!ATTLIST Vendedor Cuil ID #REQUIRED>
-    <!ELEMENT Nombre(#PCDATA)>
-    <!ELEMENT Apellido(#PCDATA)>
-    <!ELEMENT Maquina(Marca, Modelo)>
+    <!ELEMENT Nombre (#PCDATA)>
+    <!ELEMENT Apellido (#PCDATA)>
+    <!ELEMENT Maquina (Marca, Modelo)>
     <!ATTLIST Maquina Id_Maquina ID #REQUIRED>
-    <!ELEMENT Marca(#PCDATA)>
-    <!ELEMENT Modelo(#PCDATA)>
-    <!ELEMENT Telefono(#PCDATA)>
+    <!ELEMENT Marca (#PCDATA)>
+    <!ELEMENT Modelo (#PCDATA)>
+    <!ELEMENT Telefono (#PCDATA)>
 ]>
 

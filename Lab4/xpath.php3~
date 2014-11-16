@@ -1,3 +1,6 @@
+<html>
+<body>
+
 <?php
 $link = mysql_connect("kali", "db2014_g05", "FFPR14");
 mysql_select_db("db2014_g05", $link);
@@ -7,15 +10,23 @@ $sql1 = mysql_query("select Cuit, Razon_Social, NombreZona, Cuil, Nombre, Apelli
 
 $xml = new XMLWriter();
 
-$xml->startElement('ClientesEmpresa');
+$xml->openURI("clientes.xml");
+$xml->startDocument("1.0", "UTF-8", "no");
+$xml->setIndent(true);
+
+$xml->startDTD("ClientesEmpresa", "SYSTEM", "ClientesEmpresa.dtd");
+$xml->endDTD();
+
+
+$xml->startElement("ClientesEmpresa");
 
 while ($row = mysql_fetch_assoc($sql1)) {
     $xml->startElement("Cliente");
+    $xml->writeAttribute("Cuit", $row['Cuit']);
     $xml->writeElement("Razon_Social", $row['Razon_Social']);
-    $xml->writeAttribute("Cuit", $row['Cuit'])
     $xml->writeElement("Zona", $row['NombreZona']);
     $xml->startElement("Vendedor");
-    $xml->writeAttribute("Cuil", $row['Cuil'])
+    $xml->writeAttribute("Cuil", $row['Cuil']);
     $xml->writeElement("Nombre", $row['Nombre']);
     $xml->writeElement("Apellido", $row['Apellido']);
     $xml->endElement();
@@ -24,7 +35,7 @@ while ($row = mysql_fetch_assoc($sql1)) {
                          where Cuit = ".$row['Cuit'].";",$link);
     while ($rowM = mysql_fetch_assoc($sql2)) {
         $xml->startElement("Maquina");
-        $xml->writeAttribute("Id_Maquina", $rowM['Id_Maquina']);
+        $xml->writeAttribute("ID_Maquina", $rowM['ID_Maquina']);
         $xml->writeElement("Marca", $rowM['Marca']);
         $xml->writeElement("Modelo", $rowM['Modelo']);
         $xml->endElement();
@@ -38,5 +49,17 @@ while ($row = mysql_fetch_assoc($sql1)) {
     $xml->endElement();
 }
 $xml->endElement();
+$xml->endDocument();
+
+echo "<form method="."'POST'"."action="."'xpath_resp.php3'".">";
+echo "<b>Ingrese la consulta con formato xpath</b><br><br>";
+echo "<input type='text' name='xpath' size='60'><br><br>";
+echo "<i>Solo consultas sobre Clientes con sus respectivas maquinas, vendedores y zonas</i><br><br>";
+
+echo "<input type="."'submit'". "value="."'Consultar'". "name="."'consulta'".">";
+
 ?>
+
+</html>
+</body>
 

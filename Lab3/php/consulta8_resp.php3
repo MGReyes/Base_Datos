@@ -5,10 +5,10 @@
 $link = mysql_connect("kali","db2014_g05","FFPR14");
 mysql_select_db("db2014_g05", $link);
 $result = mysql_query("
-SELECT NombreCiudad, CP_Ciudad, Marca, Modelo, Cantidad
+SELECT NombreCiudad, CP_Ciudad, Marca, Modelo, sum(Cantidad) as Cantidad
 FROM Cliente NATURAL JOIN ClienteMaquina NATURAL JOIN Maquina
 GROUP BY NombreCiudad, CP_Ciudad, Marca, Modelo
-ORDER BY NombreCiudad, Cantidad desc;
+ORDER BY NombreCiudad, sum(Cantidad) desc;
 ", $link);
 if ($row = mysql_fetch_array($result)) {
     echo "<table border = '1'> \n";

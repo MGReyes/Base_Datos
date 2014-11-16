@@ -121,8 +121,8 @@ GROUP BY NombreZona;
 
 use db2014_g05;
 
-SELECT NombreCiudad, CP_Ciudad, Marca, Modelo, sum(Cantidad) as Cantidad
-FROM Cliente NATURAL JOIN ClienteMaquina NATURAL JOIN Maquina
+SELECT NombreCiudad, CP_Ciudad, Marca, Modelo, sum(Cantidad) as Cant
+FROM Cliente natural join ClienteMaquina natural join Maquina
 GROUP BY NombreCiudad, CP_Ciudad, Marca, Modelo
 ORDER BY NombreCiudad, sum(Cantidad) desc;
 

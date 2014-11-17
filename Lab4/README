@@ -1,0 +1,8 @@
+Se entrega el DTD en un archivo separado 'ClientesEmpresa.dtd'.
+
+Dos archivos con el php que se encargan de llenar dinamicamnte el archivo 'clientes.xml'
+según el estado de la base de datos y realizar consultas xpath sobre el mismo,
+devolviendo en formato html el xml resultado de la consulta.
+
+Se puede testear en: http://www.famaf.unc.edu.ar/~drp0112/php/xpath.php3
+

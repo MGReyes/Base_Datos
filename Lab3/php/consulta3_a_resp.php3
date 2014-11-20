@@ -19,11 +19,8 @@ from Maquina natural join (
     as maquinas
     natural join (
     select ID_Maquina, sum(Cantidad) as Cantidad_Clientes
-    from ClienteMaquina natural join
-        (select Cuit
-        from VendedorCliente
-        where Cuil = $cuil) 
-        as clientes_de_vendedor
+    from ClienteMaquina natural join Cliente
+    where Cuil = $cuil
     group by ID_Maquina)
     as maquinas_de_clientes;
 ", $link);

@@ -12,11 +12,8 @@ $link = mysql_connect("kali","db2014_g05","FFPR14");
 mysql_select_db("db2014_g05", $link);
 $result = mysql_query("
 select Cuit, Razon_social, sum(cantidad) as total_maquinas
-from (Cliente natural join ClienteMaquina) natural join (
-    select Cuit
-    from VendedorCliente
-    where Cuil = $cuil) 
-    as clientes_de_vendedor
+from Cliente natural join ClienteMaquina
+where Cuil = $cuil
 group by Cuit
 order by total_maquinas asc
 ", $link);

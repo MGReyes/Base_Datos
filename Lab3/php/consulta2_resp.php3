@@ -1,16 +1,17 @@
 <html>
+    <head>
+        <title>Consulta 2 - Respuesta</title>
+    </head>
     <body>
         <?php
             $F1 = $_POST['F1'];
             if (!isset($F1)){
                   echo "Debe especificar fecha de inicio";
-                  echo "</html></body> \n";
                   exit;
             }
             $F2 = $_POST['F2'];
             if (!isset($F2)){
                   echo "Debe especificar fecha de fin";
-                  echo "</html></body> \n";
                   exit;
             }
 
@@ -34,7 +35,6 @@
                     }
                 } else {
                     echo "Debe especificar una maquina";
-                    echo "</html></body> \n";
                     exit;
                 }
             }
